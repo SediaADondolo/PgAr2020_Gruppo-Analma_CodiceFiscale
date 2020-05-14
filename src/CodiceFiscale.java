@@ -1,4 +1,5 @@
 import javax.xml.stream.XMLInputFactory;
+ 
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamReader;
 import java.io.FileInputStream;
@@ -8,48 +9,97 @@ public class CodiceFiscale {
     public static void main(String[] args) {
 
         XMLInputFactory xmlif = null;
-        XMLStreamReader xmlr = null;
+        XMLStreamReader lettore = null;
+      
+        Persona[] persone = new Persona [1000]; 
+        Generatore codice = new Generatore();
+        int i = -1;
         try {
             xmlif = XMLInputFactory.newInstance();
-            xmlr = xmlif.createXMLStreamReader(new FileInputStream("inputPersone.xml"));
-        }
+            lettore = xmlif.createXMLStreamReader(new FileInputStream("inputPersone.xml"));
+         ;
+            }
         catch (Exception e) {
-            System.out.println("Errore nell'inizializzazione del reader:");
+            System.out.println("Errore nell'inizializzazione del reader:" + e.getMessage());
         }
+        
+        for (int m=0; m<persone.length; m++) {
+        	   persone[m] = new Persona();
+        	
+        	}
 
         try{
-            while(xmlr.hasNext()){
+            while(lettore.hasNext()){
 
-                switch (xmlr.getEventType()){
+                switch (lettore.getEventType()){
 
-                    case XMLStreamConstants.START_DOCUMENT:
-                        System.out.println("Start read document: " + "inputPerrsone.xml");
-                        break;
-
+                   
                     case XMLStreamConstants.START_ELEMENT: // inizio di un elemento: stampa il nome del tag e i suoi attributi
-                        System.out.println("Tag " + xmlr.getLocalName());
-                        for (int i = 0; i < xmlr.getAttributeCount(); i++)
-                            System.out.printf(" => attributo %s->%s%n", xmlr.getAttributeLocalName(i), xmlr.getAttributeValue(i));
+               
+                        if (lettore.getLocalName().equals("persona"))
+                    	{
+                    		i++;
+                    	}
+                        
+                        else if (lettore.getLocalName().equals("nome"))
+                        	{
+                        		lettore.next();
+                        		if(lettore.getEventType() == XMLStreamConstants.CHARACTERS) // Ho trovato che il valore della costante "CHARACTERS" è 4: qui verifico che dopo il tag d'apertura nome, ci sia un carattere, e lo copio in un array di nomi.
+                        			persone[i].setNome(lettore.getText());
+                        	}
+                         else if (lettore.getLocalName().equals("cognome"))
+                    	{
+                    		lettore.next();
+                    		if(lettore.getEventType() == XMLStreamConstants.CHARACTERS) // Ho trovato che il valore della costante "CHARACTERS" è 4: qui verifico che dopo il tag d'apertura nome, ci sia un carattere, e lo copio in un array di nomi.
+                    			persone[i].setCognome(lettore.getText());
+                    		}
+                        		
+                        else if (lettore.getLocalName().equals("sesso"))
+                    	{
+                    		lettore.next();
+                    		if(lettore.getEventType() == XMLStreamConstants.CHARACTERS) // Ho trovato che il valore della costante "CHARACTERS" è 4: qui verifico che dopo il tag d'apertura nome, ci sia un carattere, e lo copio in un array di nomi.
+                    			persone[i].setSesso(lettore.getText());                 		
+                    	}
+                        		
+                        else if (lettore.getLocalName().equals("comune_nascita"))
+                    	{
+                    		lettore.next();
+                    		if(lettore.getEventType() == XMLStreamConstants.CHARACTERS) // Ho trovato che il valore della costante "CHARACTERS" è 4: qui verifico che dopo il tag d'apertura nome, ci sia un carattere, e lo copio in un array di nomi.
+                    			persone[i].setComuneNascita(lettore.getText());
+                    		
+                    		
+                    	}
+                        else if (lettore.getLocalName().equals("data_nascita"))
+                    	{
+                    		lettore.next();
+                    		if(lettore.getEventType() == XMLStreamConstants.CHARACTERS) // Ho trovato che il valore della costante "CHARACTERS" è 4: qui verifico che dopo il tag d'apertura nome, ci sia un carattere, e lo assegno alla persona[i].
+                    			persone[i].setDataNascita(lettore.getText());
+                    		
+                    	}
                         break;
-
-                    case XMLStreamConstants.END_ELEMENT: // fine di un elemento: stampa il nome del tag chiuso
-                        System.out.println("END-Tag " + xmlr.getLocalName());
-                        break;
-
-                    case XMLStreamConstants.COMMENT:
-                        System.out.println("// commento " + xmlr.getText());
-                        break;// commento: ne stampa il contenuto
-
-                    case XMLStreamConstants.CHARACTERS: // content allâ€™interno di un elemento: stampa il testo
-                        if (xmlr.getText().trim().length() > 0) // controlla se il testo non contiene solo spazi
-                            System.out.println("-> " + xmlr.getText());
-                        break;
-
                 }
-                xmlr.next();
+                lettore.next();
             }
-        } catch (Exception e){
+            
+           for (int k=0; k<persone.length; k++ )
+           {
+            System.out.println(persone[k].toString());
+           }
+         
+            
+            
+     for (int s = 0; s<persone.length; s++)
+       {	  
+        	   System.out.println( "  " + codice.CodiceComune(persone[s].getComuneNascita()));
+        }
+          
+        
+        }catch (Exception e){
             System.out.println("Errore nella lettura:");
         }
-    }
+        Persona text= new Persona();
+       
+        int m = text.valoreCodiceControllo("MRNLRT97L14D940");
+        System.out.println(text.codiceControllo(m));
+}
 }
