@@ -26,6 +26,7 @@ import java.util.*;
         private ArrayList<String> totale = new ArrayList<>();
         private      	ArrayList<String> invalidi = new ArrayList<>();
         private   		ArrayList<String> spaiati = new ArrayList<>();
+        private   		ArrayList<String> utilizzati = new ArrayList<>();
         
         public ArrayList<String> getTotale() {
 			return totale;
@@ -99,46 +100,55 @@ import java.util.*;
         //Controlla se esiste un accoppiamento tra i codici generati e quelli presenti in codiciFiscali.xml
         public String sexTogheter(String utili){
 
-            for (int j = 0; j < 1000; j++) {
-
-                if(totale.get(j).equals(utili))
-                    return utili;
-            }
-
-            spaiati.add(utili);
+				            for (int j = 0; j < totale.size(); j++) {
+				
+				                if(totale.get(j).equals(utili))
+				                	utilizzati.add(totale.get(j));
+				                    return utili;
+				                					                	
+				                }
+               //dobbiamo aggiungere a spaiati se nella lista totale non c'è corrispondenza con quelli generati da noi				            
             return "ASSENTE";
+               
         }
-
+        public ArrayList spaiati()
+        {
+        	for (int i = 0; i<totale.size(); i++)
+        	{
+        		
+        	}
+        	return spaiati;
+        }
         //Controlla se i codici in codiciFiscali.xml sono validi
         public void controlValid(){
 
             for (int i = 0; i< totale.size(); i++) {
 
-                if(!totale.get(i).substring(0, 6).matches("[A-Z]{6}")){
+                if(totale.get(i).substring(0, 6).matches("[A-Z]{6}")== false){
                     invalidi.add(totale.get(i));
                     totale.remove(totale.get(i));}
 
-                if(!totale.get(i).substring(6,8).matches("[0-9]{2}")){
+                else   if(totale.get(i).substring(6,8).matches("[0-9]{2}")== false){
                     invalidi.add(totale.get(i));
                     totale.remove(totale.get(i));}
 
-                if(!totale.get(i).substring(8).matches("[A-EHLMPRST]")){
+                else  if(totale.get(i).substring(8,9).matches("[A-EHLMPRST]")== false){
                     invalidi.add(totale.get(i));
                     totale.remove(totale.get(i));}
 
                 //giorno
-                if(!totale.get(i).substring(9,11).matches("^([0-9]|[1-2][0-9]|3[01])$|^(4[1-9]|[56][0-9]|7[01])$")){
+                else  if(totale.get(i).substring(9,11).matches("(0[0-9]|[1-2][0-9]|3[01])|(4[1-9]|[56][0-9]|7[01])")== false){
                     invalidi.add(totale.get(i));
                     totale.remove(totale.get(i));}
                 
                 
                 //luogo
-                if(!totale.get(i).substring(11,15).matches("[A-MZ][1-9]\\d{2}|[A-M]0(?:[1-9]\\d|0[1-9])")){
+                else    if(totale.get(i).substring(11,15).matches("[A-MZ][1-9]\\d{2}|[A-M]0(?:[1-9]\\d|0[1-9])")== false){
                     invalidi.add(totale.get(i));
                     totale.remove(totale.get(i));}
 
 
-                    if(totale.get(i).substring(16).matches("[A-Z]")){
+                else    if(totale.get(i).substring(15,16).matches("[A-Z]")== false){
                         invalidi.add(totale.get(i));
                         totale.remove(totale.get(i));}
             }

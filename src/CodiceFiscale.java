@@ -7,32 +7,38 @@ import javax.xml.stream.XMLStreamReader;
 
 public class CodiceFiscale {
 
-	StringBuffer CodiceFiscale;
+	private String cognome;
+	private String nome;
+	private String anno;
+	private String mese;
+	private String giorno;
+	private String comune;
+	private char controllo;
 	
 		// metodo per calcolare le tre lettere corrispondenti al cognome
-		public StringBuilder surname(String cognome) {  
+		public String surname(String cognome2) {  
 			List<Character> surn=new ArrayList<Character>(); 
-		for(int i=0;i<cognome.length();i++) {
-			if ((cognome.charAt(i)!= 'A')&&
-					(cognome.charAt(i)!= 'E')&&
-						(cognome.charAt(i)!= 'I')&&
-							(cognome.charAt(i)!= 'O')&&
-								(cognome.charAt(i)!= 'U'))
-													 surn.add(cognome.charAt(i));
+		for(int i=0;i<cognome2.length();i++) {
+			if ((cognome2.charAt(i)!= 'A')&&
+					(cognome2.charAt(i)!= 'E')&&
+						(cognome2.charAt(i)!= 'I')&&
+							(cognome2.charAt(i)!= 'O')&&
+								(cognome2.charAt(i)!= 'U'))
+													 surn.add(cognome2.charAt(i));
 											}
 		if(surn.size()<3) {
-			for(int i=0;i<cognome.length();i++) {
-				if ((cognome.charAt(i)== 'A')||
-						(cognome.charAt(i)== 'E')||
-							(cognome.charAt(i)== 'I')||
-								(cognome.charAt(i)== 'O')||
-									(cognome.charAt(i)== 'U'))
-										surn.add(cognome.charAt(i));
+			for(int i=0;i<cognome2.length();i++) {
+				if ((cognome2.charAt(i)== 'A')||
+						(cognome2.charAt(i)== 'E')||
+							(cognome2.charAt(i)== 'I')||
+								(cognome2.charAt(i)== 'O')||
+									(cognome2.charAt(i)== 'U'))
+										surn.add(cognome2.charAt(i));
 												}
 						    }
-		if(cognome.length()<3) {
-			for(int i=0;i<cognome.length();i++) {
-				surn.add(cognome.charAt(i));
+		if(cognome2.length()<3) {
+			for(int i=0;i<cognome2.length();i++) {
+				surn.add(cognome2.charAt(i));
 												}
 				surn.add(2,'X');
 								}
@@ -45,12 +51,12 @@ public class CodiceFiscale {
 		for(Character s:surn) {
 			sb.append(s);
 							   }
-			
-			return sb;
+			String s = new StringBuilder().append(sb).toString();
+			return s;
 											   }
 
 		// metodo per calcolare le tre lettere corrispondenti al nome
-		public StringBuilder name(String nome) {  
+		public String name(String nome) {  
 			List<Character> name=new ArrayList<Character>(); 
 		for(int i=0;i<nome.length();i++) {
 			if ((nome.charAt(i)!= 'A')&&
@@ -87,7 +93,8 @@ public class CodiceFiscale {
 			for(Character s:name) {
 				sb.append(s);
 							       }
-		return sb;
+			String s = new StringBuilder().append(sb).toString();
+			return s;
 											   }
 			
 		// metodo che ritorna l'anno di nascita 
@@ -153,7 +160,11 @@ public class CodiceFiscale {
 			giornoNum=giornoNum+40;
 									  }
 		String def=String.valueOf(giornoNum);
-	
+			if(giornoNum<10)
+			{
+				return "0" + def;
+			}
+		
 		return def;
 															}
 	
@@ -263,16 +274,21 @@ public class CodiceFiscale {
 				  
 				}
 		
-		public StringBuilder creaCodiceSenzaControllo (Persona ex)
+		public String creaCodiceFiscale (Persona ex)
 		{	
-			StringBuilder cognome = surname(ex.getCognome());
-			StringBuilder nome = name(ex.getNome());
+			String cognome = surname(ex.getCognome());
+			String nome = name(ex.getNome());
 			String anno = annoNascita(ex.getDataNascita());
 			String mese = meseNascita(ex.getDataNascita());
 			String giorno = giornoNascita(ex.getDataNascita(), ex.getSesso());
 			String comune = CodiceComune(ex.getComuneNascita());
-			String totale = anno + mese + giorno + comune;
-			return cognome.append(nome.append(totale));
+			String totale = cognome + nome + anno + mese + giorno + comune;
+			int k = valoreCodiceControllo(totale);
+			char m = codiceControllo(k);
+			String codiceFiscale = totale + m;
+			return codiceFiscale;
 		}
 
+		
+		
 }

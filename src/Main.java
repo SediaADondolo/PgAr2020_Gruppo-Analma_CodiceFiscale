@@ -81,22 +81,19 @@ public class Main {
                 }
                 lettore.next();
             }
-          //  CodiceFiscale prova = new CodiceFiscale();
-         /*for (int k=0; k<persone.length; k++ )
+          CodiceFiscale prova1 = new CodiceFiscale();
+         // System.out.println(prova1.surname("MLT"));
+         for (int k=0; k<persone.length; k++ )
            {
-             
-             System.out.println(prova.creaCodiceSenzaControllo(persone[k]));
-            System.out.println(persone[k].toString());
-           }*/
+            String code = prova1.creaCodiceFiscale(persone[k]);
+            persone[k].setCodiceFiscale(code);
+           }
          
         
         }catch (Exception e){
             System.out.println("Errore nella lettura:");
         }
      
-       /*
-        int m = text.valoreCodiceControllo("MRNLRT97L14D940");
-        System.out.println(text.codiceControllo(m));*/
         ClasseAldue prova = new ClasseAldue();
         prova.initReader("codiciFiscali.xml");
         prova.createTotal();
@@ -106,6 +103,18 @@ public class Main {
         System.out.println(prova.getTotale());
         System.out.println(prova.getInvalidi().size());
         System.out.println(prova.getTotale().size());
-      
+        
+        for (int k=0; k<persone.length; k++)
+        {
+        	
+        	if(prova.sexTogheter(persone[k].getCodiceFiscale()).equals("ASSENTE")) 
+        		persone[k].setCodiceFiscale("ASSENTE");
+     
+        	//System.out.println(persone[k].toString());
+        	}
+        System.out.println(prova.getSpaiati());
+        System.out.println(prova.getSpaiati().size());
+        System.out.println(prova.getTotale().size());
 }
 }
+
