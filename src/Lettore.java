@@ -5,14 +5,32 @@ import javax.xml.stream.XMLStreamReader;
 import java.io.FileInputStream;
 
 public class Lettore {
-	
-	 
-	
+
+	public XMLInputFactory getXmlif() {
+		return xmlif;
+	}
+
+	public void setXmlif(XMLInputFactory xmlif) {
+		this.xmlif = xmlif;
+	}
+
+	public XMLStreamReader getXmlr() {
+		return xmlr;
+	}
+
+	public void setXmlr(XMLStreamReader xmlr) {
+		this.xmlr = xmlr;
+	}
+
+	XMLInputFactory xmlif = null;
+    XMLStreamReader xmlr = null;
+	public Lettore ()
+	{
+		
+	}
 
 	public void initReader(String nome_file){
 
-		XMLInputFactory xmlif = null;
-	    XMLStreamReader xmlr = null;
 	    
         try {
             xmlif = XMLInputFactory.newInstance();

@@ -8,21 +8,13 @@ public class Main {
 
     public static void main(String[] args) {
     	
-
-        XMLInputFactory xmlif = null;
-        XMLStreamReader lettore = null;
-      
+    	Lettore scanner = new Lettore();
+    	XMLInputFactory xmlif = scanner.getXmlif();
+        XMLStreamReader lettore= scanner.getXmlr();
         Persona[] persone = new Persona [1000]; 
     
         int i = -1;
-        try {
-            xmlif = XMLInputFactory.newInstance();
-            lettore = xmlif.createXMLStreamReader(new FileInputStream("inputPersone.xml"));
-         ;
-            }
-        catch (Exception e) {
-            System.out.println("Errore nell'inizializzazione del reader:" + e.getMessage());
-        }
+        scanner.initReader("inputPersone.xml");
         
         for (int m=0; m<persone.length; m++) {
         	   persone[m] = new Persona();

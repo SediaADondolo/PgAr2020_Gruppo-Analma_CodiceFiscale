@@ -7,13 +7,6 @@ import javax.xml.stream.XMLStreamReader;
 
 public class CodiceFiscale {
 
-	private String cognome;
-	private String nome;
-	private String anno;
-	private String mese;
-	private String giorno;
-	private String comune;
-	private char controllo;
 	
 		// metodo per calcolare le tre lettere corrispondenti al cognome
 		public String surname(String cognome2) {  

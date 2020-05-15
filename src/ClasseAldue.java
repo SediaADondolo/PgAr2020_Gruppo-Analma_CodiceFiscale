@@ -3,20 +3,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.*;
 
-<<<<<<< HEAD
-
     public class ClasseAldue{
-=======
-public class Utility {
-
-    String[] nomi = new String[]{"maestro"};
-    String[] cognomi = new String[]{"IL"};
-    String[] sesso = new String[]{"Mai abbastanza"};
-    String[] data_nascita = new String[]{"1478-56-89"};
-    String[] comune_nascita = new String[]{"sto cazzo"};
-
->>>>>>> fd29d327d977ac80184192332e11c065931bb617
-
+  
     int q = 1000; //numero codici fiscali
     int a = 1000; //numero invalidi
     int f = 1000; //numero spaiati
@@ -27,14 +15,6 @@ public class Utility {
     XMLOutputFactory xmlof;
     XMLStreamWriter xmlw = null;
 
-    ArrayList<String> totale = new ArrayList<>();
-    ArrayList<String> invalidi = new ArrayList<>();
-    ArrayList<String> spaiati = new ArrayList<>();
-
-    public Utility() {
-    }
-
-<<<<<<< HEAD
         private ArrayList<String> totale = new ArrayList<>();
         private      	ArrayList<String> invalidi = new ArrayList<>();
         private   		ArrayList<String> spaiati = new ArrayList<>();
@@ -64,15 +44,15 @@ public class Utility {
 			this.spaiati = spaiati;
 		}
 
-		public ClasseAldue() {
-=======
+		public ClasseAldue() {}
+
     //Inizializza Lettore
     public void initReader(String nome_file){
 
         try {
             xmlif = XMLInputFactory.newInstance();
             xmlr = xmlif.createXMLStreamReader(new FileInputStream(nome_file));
->>>>>>> fd29d327d977ac80184192332e11c065931bb617
+
         }
         catch (Exception e) {
             System.out.println("Errore nell'inizializzazione del reader:");
@@ -92,19 +72,12 @@ public class Utility {
         }
     }
 
-<<<<<<< HEAD
-        //Crea Arraylist con tutti i codici fiscali del file codiciFiscali.xml
-        public void createTotal(){
-        	
-            try{
-                while(xmlr.hasNext()){
-=======
+        
     //Crea Arraylist con tutti i codici fiscali del file codiciFiscali.xml
     public void createTotal(){
 
         try{
             while(xmlr.hasNext()){
->>>>>>> fd29d327d977ac80184192332e11c065931bb617
 
                 if (xmlr.getEventType() == XMLStreamConstants.CHARACTERS) { // content all’interno di un elemento: stampa il testo
                     if (xmlr.getText().trim().length() > 0) // controlla se il testo non contiene solo spazi
@@ -117,7 +90,6 @@ public class Utility {
         }
     }
 
-<<<<<<< HEAD
         //Controlla se esiste un accoppiamento tra i codici generati e quelli presenti in codiciFiscali.xml
         public String sexTogheter(String utili){
 
@@ -173,57 +145,10 @@ public class Utility {
                         invalidi.add(totale.get(i));
                         totale.remove(totale.get(i));}
             }
-=======
-    //Controlla se i codici in codiciFiscali.xml sono validi
-    public void controlValid(){
-
-        for (String c: totale) {
-
-            if(!c.substring(0, 6).matches("[A-Z]{6}")){
-                invalidi.add(c);
-                totale.remove(c);}
-
-            if(!c.substring(6,8).matches("[0-9]{2}")){
-                invalidi.add(c);
-                totale.remove(c);}
-
-            if(!c.substring(8).matches("[A-EHLMPRST]")){
-                invalidi.add(c);
-                totale.remove(c);}
-
-            //giorno
-            if(!c.substring(9,11).matches("(0[1-9]3[01])|(4[1-9]7[01])")){
-                invalidi.add(c);
-                totale.remove(c);}
-
-            //luogo
->>>>>>> fd29d327d977ac80184192332e11c065931bb617
-
-            if(c.substring(11,15).matches("[A-MZ][1-9]\\d{2}|[A-M]0(?:[1-9]\\d|0[1-9])")){
-                invalidi.add(c);
-                totale.remove(c);}
-
-            if(!c.substring(16).matches("[A-Z]")){
-                invalidi.add(c);
-                totale.remove(c);}
         }
-    }
-
-    //Controlla se esiste un accoppiamento tra i codici generati e quelli presenti in codiciFiscali.xml
-    public String sexTogheter(String utili){
-
-        for (int j = 0; j < 1000; j++) {
-
-            if(totale.get(j).equals(utili))
-                return utili;
-        }
-
-        spaiati.add(utili);
-        return "ASSENTE";
-    }
 
     //Scrive il file Output.xml
-    public void createOutput(){
+   /* public void createOutput(){
         try{
             assert xmlw != null;
 
@@ -311,12 +236,8 @@ public class Utility {
 
 
         }
-    }
+    }*/
 }
 
 
 
-<<<<<<< HEAD
-
-=======
->>>>>>> fd29d327d977ac80184192332e11c065931bb617
