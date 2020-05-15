@@ -5,12 +5,14 @@ import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamReader;
 
+
+
 public class CodiceFiscale {
 
-	StringBuffer CodiceFiscale;
 	
-		// metodo per calcolare le tre lettere corrispondenti al cognome
-		public StringBuilder surname(String cognome) {  
+		// Questo metodo ritorna le tre lettere del cognome 
+	
+		public String surname(String cognome) {  
 			List<Character> surn=new ArrayList<Character>(); 
 		for(int i=0;i<cognome.length();i++) {
 			if ((cognome.charAt(i)!= 'A')&&
@@ -18,9 +20,9 @@ public class CodiceFiscale {
 						(cognome.charAt(i)!= 'I')&&
 							(cognome.charAt(i)!= 'O')&&
 								(cognome.charAt(i)!= 'U'))
-													 surn.add(cognome.charAt(i));
+													 surn.add(cognome.charAt(i)); //aggiunta di tutte le consonanti alla List
 											}
-		if(surn.size()<3) {
+		if(surn.size()<3) {														//se ho meno di 3 consonanti aggiungo in coda le vocali
 			for(int i=0;i<cognome.length();i++) {
 				if ((cognome.charAt(i)== 'A')||
 						(cognome.charAt(i)== 'E')||
@@ -30,27 +32,27 @@ public class CodiceFiscale {
 										surn.add(cognome.charAt(i));
 												}
 						    }
-		if(cognome.length()<3) {
+		if(cognome.length()<3) {												//se il cognome ha meno di 3 lettere aggiungo una X in coda
 			for(int i=0;i<cognome.length();i++) {
 				surn.add(cognome.charAt(i));
 												}
 				surn.add(2,'X');
 								}
 		
-		if(surn.size()>3) {
+		if(surn.size()>3) {														//tengo solo i primi tre caratteri della List
 			surn=surn.subList(0, 3);
 						  }
 		
-		StringBuilder sb=new StringBuilder();
+		StringBuilder sb=new StringBuilder();									//conversione da List a String eliminando parentesi e virgole e compattando
 		for(Character s:surn) {
 			sb.append(s);
 							   }
-			
-			return sb;
+			String s = new StringBuilder().append(sb).toString();				
+			return s;
 											   }
 
-		// metodo per calcolare le tre lettere corrispondenti al nome
-		public StringBuilder name(String nome) {  
+		// Questo metodo ritorna le tre lettere del nome
+		public String name(String nome) {  
 			List<Character> name=new ArrayList<Character>(); 
 		for(int i=0;i<nome.length();i++) {
 			if ((nome.charAt(i)!= 'A')&&
@@ -58,13 +60,13 @@ public class CodiceFiscale {
 						(nome.charAt(i)!= 'I')&&
 							(nome.charAt(i)!= 'O')&&
 								(nome.charAt(i)!= 'U'))
-									name.add(nome.charAt(i));
+									name.add(nome.charAt(i));  //aggiunta di tutte le consonanti alla List
 										  }
 		if(name.size()>3) {
-			name.remove(1);
+			name.remove(1);   									//se ho piu di tre consonanti non prendo la seconda
 						   }
 		
-		if(name.size()<3) {
+		if(name.size()<3) {  									//se ho meno di 3 consonanti prendo le vocali
 			for(int i=0;i<nome.length();i++) {
 				if ((nome.charAt(i)== 'A')||
 						(nome.charAt(i)== 'E')||
@@ -74,33 +76,34 @@ public class CodiceFiscale {
 										name.add(nome.charAt(i));
 											   }
 						    }
-		if(nome.length()<3) {
+		if(nome.length()<3) {   
 			for(int i=0;i<nome.length();i++) {
-				name.add(nome.charAt(i));
+				name.add(nome.charAt(i));   					//con meno di 3 lettere nel nome aggiungo X in coda
 											  }
 				name.add(2,'X');
 							}
 		if(name.size()>3) {
-			name=name.subList(0, 3);
+			name=name.subList(0, 3);							//prendo solo le prime tre lettere della List
 						  }
-		StringBuilder sb=new StringBuilder();
+		StringBuilder sb=new StringBuilder();					//formatto la List
 			for(Character s:name) {
 				sb.append(s);
 							       }
-		return sb;
+			String s = new StringBuilder().append(sb).toString();
+			return s;
 											   }
 			
-		// metodo che ritorna l'anno di nascita 
+		// Questo metodo ritorna le due cifre dell'anno di nascita 
 		public String annoNascita (String dataNascita) { //"1998-01-08"
-			String anno=dataNascita.substring(2, 4);
+			String anno=dataNascita.substring(2, 4); 
 			return anno;
 		}
 			
-		// metodo che ritorna il mese di nascita 
+		// Questo metodo ritorna la lettera corrispondente al mese di nascita 
 		public String meseNascita(String dataNascita) {
-			String mese=dataNascita.substring(5, 7);
+			String mese=dataNascita.substring(5, 7);	//dalla stringa della data prendo solo il mese e associo al numero del mese la lettera corrispondente
 			String lettera= "";
-			
+									
 			switch(mese) {
 			
 				case "01":	
@@ -143,21 +146,26 @@ public class CodiceFiscale {
 			return lettera; 
 			}
 		
-		// metodo che ritorna il giorno di nascita 
+		// Questo metodo ritorna le due cifre del giorno di nascita 
 		public String giornoNascita(String dataNascita,String sex) {
 	
 		String giorno=dataNascita.substring(8, 10);
-		int giornoNum = Integer.parseInt(giorno);
+		int giornoNum = Integer.parseInt(giorno);  // converto la String del giorno in numero per poter sommare in caso il sesso sia f
 		
 		if(sex.equalsIgnoreCase("F")){
 			giornoNum=giornoNum+40;
 									  }
-		String def=String.valueOf(giornoNum);
-	
+		String def=String.valueOf(giornoNum);  //riconverto in formato String
+			if(giornoNum<10)
+			{
+				return "0" + def;   
+			}
+		
 		return def;
 															}
-	
- 		public int valoreCodiceControllo (String s) //Con questo metodo calcolo il valore che verr� associato alla lettera finale di controllo del codice fiscale
+		
+		//Questo metodo calcola il valore che verrà associato alla lettera finale di controllo del codice fiscale
+ 		public int valoreCodiceControllo (String s) 
 	{
 		int valore = 0;
 		
@@ -172,17 +180,18 @@ public class CodiceFiscale {
 		return valore;
 	}
 		
-		public int valoreCifreDispari (char carattereTest) //Questo metodo serve per calcolare il valore di ogni cifra in posizione dispari del codice fiscale, secondo una tabella predefinita
+ 		//Questo metodo calcola il valore di ogni cifra in posizione dispari del codice fiscale, secondo una tabella predefinita
+		public int valoreCifreDispari (char carattereTest) 
 	{
 		
-		String str1 = "BAKPLCQDREVOSFTGUHMINJWZYX"; 		//  Faccio in modo che il valore che assume un determinato carattere, sia corrispondente alla sua posizione all'interno di questa stringa
+		String str1 = "BAKPLCQDREVOSFTGUHMINJWZYX"; 		//Faccio in modo che il valore che assume un determinato carattere, sia corrispondente alla sua posizione all'interno di questa stringa
 		String str2 = "10   2 3 4   5 6 7 8 9";
 		for(int i = 0; i<str1.length(); i++)
 		{
 			if(str1.charAt(i) == carattereTest)
 				return i;
 		}
-		for(int i = 0; i<str2.length(); i++)    // Se entra in questo for vuol dire che il carattere non era una lettera ma una cifra
+		for(int i = 0; i<str2.length(); i++)    			//Se entra in questo for vuol dire che il carattere non era una lettera ma una cifra
 		{
 			if(str2.charAt(i) == carattereTest)
 				return i;
@@ -190,9 +199,9 @@ public class CodiceFiscale {
 		
 		return 0;
 	}
-				
-		public int valoreCifrePari (char carattereTest) // Stesso discorso per il metodo valoreCifreDispari().
-	{
+			
+		//Questo metodo calcola il valore di ogni cifra in posizione pari del codice fiscale, secondo una tabella predefinita
+		public int valoreCifrePari (char carattereTest) {
 		
 		String str3 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		String str4 = "0123456789";
@@ -209,8 +218,9 @@ public class CodiceFiscale {
 		
 		return 0;
 	}
-	
-		public char codiceControllo (int valore)  // Questo metodo restituisce il carattere che si riferisce al valore in input
+		
+		//Questo metodo restituisce il carattere che si riferisce al valore in input
+		public char codiceControllo (int valore)  
 		{
 			int resto = valore % 26;
 			String str5 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -222,6 +232,7 @@ public class CodiceFiscale {
 			return ' ';
 		}
 	
+		//Questo metodo restituisce il carattere alfanumerico corrispondente al comune di nascita
 		public String CodiceComune (String comune_nascita)
 		 {
 			 XMLInputFactory xmcomlif = null;
@@ -263,16 +274,22 @@ public class CodiceFiscale {
 				  
 				}
 		
-		public StringBuilder creaCodiceSenzaControllo (Persona ex)
+		//Questo metodo riunisce tutti i metodi precedenti per calcolare il codice fiscale completo
+		public String creaCodiceFiscale (Persona ex)
 		{	
-			StringBuilder cognome = surname(ex.getCognome());
-			StringBuilder nome = name(ex.getNome());
+			String cognome = surname(ex.getCognome());
+			String nome = name(ex.getNome());
 			String anno = annoNascita(ex.getDataNascita());
 			String mese = meseNascita(ex.getDataNascita());
 			String giorno = giornoNascita(ex.getDataNascita(), ex.getSesso());
 			String comune = CodiceComune(ex.getComuneNascita());
-			String totale = anno + mese + giorno + comune;
-			return cognome.append(nome.append(totale));
+			String totale = cognome + nome + anno + mese + giorno + comune;
+			int k = valoreCodiceControllo(totale);
+			char m = codiceControllo(k);
+			String codiceFiscale = totale + m;
+			return codiceFiscale;
 		}
 
+		
+		
 }
