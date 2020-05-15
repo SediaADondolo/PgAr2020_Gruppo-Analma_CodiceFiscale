@@ -8,15 +8,15 @@ public class CodiceFiscale {
 		// metodo per calcolare le tre lettere corrispondenti al cognome
 		public String surname(String cognome2) {  
 			List<Character> surn=new ArrayList<Character>(); 
-		for(int i=0;i<cognome2.length();i++) {
+		for(int i=0;i<cognome2.length();i++) { //Aggiunge tutte le consonanti dell'input all'arrayList surn
 			if ((cognome2.charAt(i)!= 'A')&&
 					(cognome2.charAt(i)!= 'E')&&
 						(cognome2.charAt(i)!= 'I')&&
 							(cognome2.charAt(i)!= 'O')&&
 								(cognome2.charAt(i)!= 'U'))
-													 surn.add(cognome2.charAt(i));
+													 surn.add(cognome2.charAt(i)); 
 											}
-		if(surn.size()<3) {
+		if(surn.size()<3) { //le consonanti non bastano, aggiungo le vocali
 			for(int i=0;i<cognome2.length();i++) {
 				if ((cognome2.charAt(i)== 'A')||
 						(cognome2.charAt(i)== 'E')||
@@ -26,18 +26,18 @@ public class CodiceFiscale {
 										surn.add(cognome2.charAt(i));
 												}
 						    }
-		if(cognome2.length()<3) {
+		if(cognome2.length()<3) { // il cognome ha solo due caratteri
 			for(int i=0;i<cognome2.length();i++) {
 				surn.add(cognome2.charAt(i));
 												}
 				surn.add(2,'X');
 								}
 		
-		if(surn.size()>3) {
-			surn=surn.subList(0, 3);
+		if(surn.size()>3) { //prendo solo i primi tre caratteri dell'arrayList surn
+			surn=surn.subList(0, 3); 
 						  }
 		
-		StringBuilder sb=new StringBuilder();
+		StringBuilder sb=new StringBuilder(); //faccio in modo che ritorni una stringa
 		for(Character s:surn) {
 			sb.append(s);
 							   }
@@ -48,19 +48,19 @@ public class CodiceFiscale {
 		// metodo per calcolare le tre lettere corrispondenti al nome
 		public String name(String nome) {  
 			List<Character> name=new ArrayList<Character>(); 
-		for(int i=0;i<nome.length();i++) {
+		for(int i=0;i<nome.length();i++) {//aggiungo le consonanti
 			if ((nome.charAt(i)!= 'A')&&
 					(nome.charAt(i)!= 'E')&&
 						(nome.charAt(i)!= 'I')&&
 							(nome.charAt(i)!= 'O')&&
 								(nome.charAt(i)!= 'U'))
-									name.add(nome.charAt(i));
+									name.add(nome.charAt(i)); 
 										  }
-		if(name.size()>3) {
+		if(name.size()>3) {  //se il nome è composto da più di tre caratteri elimino il secondo
 			name.remove(1);
 						   }
 		
-		if(name.size()<3) {
+		if(name.size()<3) { //aggiungo le vocali se le consonanti non bastano
 			for(int i=0;i<nome.length();i++) {
 				if ((nome.charAt(i)== 'A')||
 						(nome.charAt(i)== 'E')||
@@ -70,16 +70,16 @@ public class CodiceFiscale {
 										name.add(nome.charAt(i));
 											   }
 						    }
-		if(nome.length()<3) {
+		if(nome.length()<3) { //Se il nome è troppo corto aggiungo il carattere 'X'
 			for(int i=0;i<nome.length();i++) {
 				name.add(nome.charAt(i));
 											  }
 				name.add(2,'X');
 							}
-		if(name.size()>3) {
+		if(name.size()>3) { //Ritorno solo i primi 3 caratteri
 			name=name.subList(0, 3);
 						  }
-		StringBuilder sb=new StringBuilder();
+		StringBuilder sb=new StringBuilder(); //Faccio in modo che ritorni una stringa
 			for(Character s:name) {
 				sb.append(s);
 							       }
@@ -89,13 +89,13 @@ public class CodiceFiscale {
 			
 		// metodo che ritorna l'anno di nascita 
 		public String annoNascita (String dataNascita) { //"1998-01-08"
-			String anno=dataNascita.substring(2, 4);
+			String anno=dataNascita.substring(2, 4); //Prendo le ultime due cifre dell'input dell'xml
 			return anno;
 		}
 			
 		// metodo che ritorna il mese di nascita 
 		public String meseNascita(String dataNascita) {
-			String mese=dataNascita.substring(5, 7);
+			String mese=dataNascita.substring(5, 7); //In base al mese, associo una lettera prestabilita
 			String lettera= "";
 			
 			switch(mese) {
@@ -144,15 +144,15 @@ public class CodiceFiscale {
 		public String giornoNascita(String dataNascita,String sex) {
 	
 		String giorno=dataNascita.substring(8, 10);
-		int giornoNum = Integer.parseInt(giorno);
+		int giornoNum = Integer.parseInt(giorno); //Converto la stringa in un intero
 		
-		if(sex.equalsIgnoreCase("F")){
+		if(sex.equalsIgnoreCase("F")){ //Sommo 40 se il soggetto è una femmina
 			giornoNum=giornoNum+40;
 									  }
 		String def=String.valueOf(giornoNum);
 			if(giornoNum<10)
 			{
-				return "0" + def;
+				return "0" + def; //Se il numero è <10, aggiungo uno 0 davanti
 			}
 		
 		return def;
