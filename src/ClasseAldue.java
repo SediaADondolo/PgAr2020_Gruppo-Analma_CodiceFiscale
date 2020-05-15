@@ -3,14 +3,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 
-public class ClasseAldue {
 
-    import javax.xml.stream.*;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.util.ArrayList;
-
-    public class Utility {
+    public class ClasseAldue{
 
         String[] nomi = new String[]{"maestro"};
         String[] cognomi = new String[]{"IL"};
