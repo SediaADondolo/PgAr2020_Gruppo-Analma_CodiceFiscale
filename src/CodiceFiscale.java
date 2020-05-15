@@ -157,7 +157,7 @@ public class CodiceFiscale {
 		return def;
 															}
 	
- 		public int valoreCodiceControllo (String s) //Con questo metodo calcolo il valore che verrà associato alla lettera finale di controllo del codice fiscale
+ 		public int valoreCodiceControllo (String s) //Con questo metodo calcolo il valore che verrï¿½ associato alla lettera finale di controllo del codice fiscale
 	{
 		int valore = 0;
 		
@@ -241,12 +241,12 @@ public class CodiceFiscale {
 		            while(comuni.hasNext()){
 		            	switch (comuni.getEventType()) 
 		            	{
-		            	case XMLStreamConstants.CHARACTERS: //Mi interessa quando nell'xml è presente un "character"
+		            	case XMLStreamConstants.CHARACTERS: //Mi interessa quando nell'xml ï¿½ presente un "character"
 		            			if (comuni.getText().equals(comune_nascita))  //Verifico quando il testo corrisponde al comune di nascita che gli passo come input
 		            			{           				            			
 			            			for(int i = 0; i<4; i++) //faccio un ciclo  for per arrivare al prossimo "character" per prendere il codice corrispondente al comune di nascita trovato sopra
-			            			{							// ciclo 4 volte perché ci sono 4 eventi tra il "character" del nome del comune e il suo relativo codice
-			            				comuni.next();			// devo tenere a mente che nell'xml c'è il "character" che permette di andare a capo
+			            			{							// ciclo 4 volte perchï¿½ ci sono 4 eventi tra il "character" del nome del comune e il suo relativo codice
+			            				comuni.next();			// devo tenere a mente che nell'xml c'ï¿½ il "character" che permette di andare a capo
 			            			}            		
 				            			if(comuni.getEventType() == XMLStreamConstants.CHARACTERS) //verifico che l'evento sia "character"
 				            			{

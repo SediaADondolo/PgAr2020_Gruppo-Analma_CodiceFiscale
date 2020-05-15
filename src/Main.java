@@ -12,7 +12,6 @@ public class Main {
         XMLStreamReader lettore = null;
       
         Persona[] persone = new Persona [1000]; 
-        Generatore codice = new Generatore();
         int i = -1;
         try {
             xmlif = XMLInputFactory.newInstance();
@@ -44,27 +43,27 @@ public class Main {
                         else if (lettore.getLocalName().equals("nome"))
                         	{
                         		lettore.next();
-                        		if(lettore.getEventType() == XMLStreamConstants.CHARACTERS) // Ho trovato che il valore della costante "CHARACTERS" è 4: qui verifico che dopo il tag d'apertura nome, ci sia un carattere, e lo copio in un array di nomi.
+                        		if(lettore.getEventType() == XMLStreamConstants.CHARACTERS) // Ho trovato che il valore della costante "CHARACTERS" ï¿½ 4: qui verifico che dopo il tag d'apertura nome, ci sia un carattere, e lo copio in un array di nomi.
                         			persone[i].setNome(lettore.getText());
                         	}
                          else if (lettore.getLocalName().equals("cognome"))
                     	{
                     		lettore.next();
-                    		if(lettore.getEventType() == XMLStreamConstants.CHARACTERS) // Ho trovato che il valore della costante "CHARACTERS" è 4: qui verifico che dopo il tag d'apertura nome, ci sia un carattere, e lo copio in un array di nomi.
+                    		if(lettore.getEventType() == XMLStreamConstants.CHARACTERS) // Ho trovato che il valore della costante "CHARACTERS" ï¿½ 4: qui verifico che dopo il tag d'apertura nome, ci sia un carattere, e lo copio in un array di nomi.
                     			persone[i].setCognome(lettore.getText());
                     		}
                         		
                         else if (lettore.getLocalName().equals("sesso"))
                     	{
                     		lettore.next();
-                    		if(lettore.getEventType() == XMLStreamConstants.CHARACTERS) // Ho trovato che il valore della costante "CHARACTERS" è 4: qui verifico che dopo il tag d'apertura nome, ci sia un carattere, e lo copio in un array di nomi.
+                    		if(lettore.getEventType() == XMLStreamConstants.CHARACTERS) // Ho trovato che il valore della costante "CHARACTERS" ï¿½ 4: qui verifico che dopo il tag d'apertura nome, ci sia un carattere, e lo copio in un array di nomi.
                     			persone[i].setSesso(lettore.getText());                 		
                     	}
                         		
                         else if (lettore.getLocalName().equals("comune_nascita"))
                     	{
                     		lettore.next();
-                    		if(lettore.getEventType() == XMLStreamConstants.CHARACTERS) // Ho trovato che il valore della costante "CHARACTERS" è 4: qui verifico che dopo il tag d'apertura nome, ci sia un carattere, e lo copio in un array di nomi.
+                    		if(lettore.getEventType() == XMLStreamConstants.CHARACTERS) // Ho trovato che il valore della costante "CHARACTERS" ï¿½ 4: qui verifico che dopo il tag d'apertura nome, ci sia un carattere, e lo copio in un array di nomi.
                     			persone[i].setComuneNascita(lettore.getText());
                     		
                     		
@@ -72,7 +71,7 @@ public class Main {
                         else if (lettore.getLocalName().equals("data_nascita"))
                     	{
                     		lettore.next();
-                    		if(lettore.getEventType() == XMLStreamConstants.CHARACTERS) // Ho trovato che il valore della costante "CHARACTERS" è 4: qui verifico che dopo il tag d'apertura nome, ci sia un carattere, e lo assegno alla persona[i].
+                    		if(lettore.getEventType() == XMLStreamConstants.CHARACTERS) // Ho trovato che il valore della costante "CHARACTERS" ï¿½ 4: qui verifico che dopo il tag d'apertura nome, ci sia un carattere, e lo assegno alla persona[i].
                     			persone[i].setDataNascita(lettore.getText());
                     		
                     	}
