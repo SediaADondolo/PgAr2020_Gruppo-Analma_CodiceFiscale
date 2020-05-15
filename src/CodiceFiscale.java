@@ -1,57 +1,51 @@
-import java.io.FileInputStream;
+
 import java.util.*;
-
-import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLStreamConstants;
-import javax.xml.stream.XMLStreamReader;
-
 
 
 public class CodiceFiscale {
 
 	
-		// Questo metodo ritorna le tre lettere del cognome 
-	
-		public String surname(String cognome) {  
+		// metodo per calcolare le tre lettere corrispondenti al cognome
+		public String surname(String cognome2) {  
 			List<Character> surn=new ArrayList<Character>(); 
-		for(int i=0;i<cognome.length();i++) {
-			if ((cognome.charAt(i)!= 'A')&&
-					(cognome.charAt(i)!= 'E')&&
-						(cognome.charAt(i)!= 'I')&&
-							(cognome.charAt(i)!= 'O')&&
-								(cognome.charAt(i)!= 'U'))
-													 surn.add(cognome.charAt(i)); //aggiunta di tutte le consonanti alla List
+		for(int i=0;i<cognome2.length();i++) {
+			if ((cognome2.charAt(i)!= 'A')&&
+					(cognome2.charAt(i)!= 'E')&&
+						(cognome2.charAt(i)!= 'I')&&
+							(cognome2.charAt(i)!= 'O')&&
+								(cognome2.charAt(i)!= 'U'))
+													 surn.add(cognome2.charAt(i));
 											}
-		if(surn.size()<3) {														//se ho meno di 3 consonanti aggiungo in coda le vocali
-			for(int i=0;i<cognome.length();i++) {
-				if ((cognome.charAt(i)== 'A')||
-						(cognome.charAt(i)== 'E')||
-							(cognome.charAt(i)== 'I')||
-								(cognome.charAt(i)== 'O')||
-									(cognome.charAt(i)== 'U'))
-										surn.add(cognome.charAt(i));
+		if(surn.size()<3) {
+			for(int i=0;i<cognome2.length();i++) {
+				if ((cognome2.charAt(i)== 'A')||
+						(cognome2.charAt(i)== 'E')||
+							(cognome2.charAt(i)== 'I')||
+								(cognome2.charAt(i)== 'O')||
+									(cognome2.charAt(i)== 'U'))
+										surn.add(cognome2.charAt(i));
 												}
 						    }
-		if(cognome.length()<3) {												//se il cognome ha meno di 3 lettere aggiungo una X in coda
-			for(int i=0;i<cognome.length();i++) {
-				surn.add(cognome.charAt(i));
+		if(cognome2.length()<3) {
+			for(int i=0;i<cognome2.length();i++) {
+				surn.add(cognome2.charAt(i));
 												}
 				surn.add(2,'X');
 								}
 		
-		if(surn.size()>3) {														//tengo solo i primi tre caratteri della List
+		if(surn.size()>3) {
 			surn=surn.subList(0, 3);
 						  }
 		
-		StringBuilder sb=new StringBuilder();									//conversione da List a String eliminando parentesi e virgole e compattando
+		StringBuilder sb=new StringBuilder();
 		for(Character s:surn) {
 			sb.append(s);
 							   }
-			String s = new StringBuilder().append(sb).toString();				
+			String s = new StringBuilder().append(sb).toString();
 			return s;
 											   }
 
-		// Questo metodo ritorna le tre lettere del nome
+		// metodo per calcolare le tre lettere corrispondenti al nome
 		public String name(String nome) {  
 			List<Character> name=new ArrayList<Character>(); 
 		for(int i=0;i<nome.length();i++) {
@@ -60,13 +54,13 @@ public class CodiceFiscale {
 						(nome.charAt(i)!= 'I')&&
 							(nome.charAt(i)!= 'O')&&
 								(nome.charAt(i)!= 'U'))
-									name.add(nome.charAt(i));  //aggiunta di tutte le consonanti alla List
+									name.add(nome.charAt(i));
 										  }
 		if(name.size()>3) {
-			name.remove(1);   									//se ho piu di tre consonanti non prendo la seconda
+			name.remove(1);
 						   }
 		
-		if(name.size()<3) {  									//se ho meno di 3 consonanti prendo le vocali
+		if(name.size()<3) {
 			for(int i=0;i<nome.length();i++) {
 				if ((nome.charAt(i)== 'A')||
 						(nome.charAt(i)== 'E')||
@@ -76,16 +70,16 @@ public class CodiceFiscale {
 										name.add(nome.charAt(i));
 											   }
 						    }
-		if(nome.length()<3) {   
+		if(nome.length()<3) {
 			for(int i=0;i<nome.length();i++) {
-				name.add(nome.charAt(i));   					//con meno di 3 lettere nel nome aggiungo X in coda
+				name.add(nome.charAt(i));
 											  }
 				name.add(2,'X');
 							}
 		if(name.size()>3) {
-			name=name.subList(0, 3);							//prendo solo le prime tre lettere della List
+			name=name.subList(0, 3);
 						  }
-		StringBuilder sb=new StringBuilder();					//formatto la List
+		StringBuilder sb=new StringBuilder();
 			for(Character s:name) {
 				sb.append(s);
 							       }
@@ -93,17 +87,17 @@ public class CodiceFiscale {
 			return s;
 											   }
 			
-		// Questo metodo ritorna le due cifre dell'anno di nascita 
+		// metodo che ritorna l'anno di nascita 
 		public String annoNascita (String dataNascita) { //"1998-01-08"
-			String anno=dataNascita.substring(2, 4); 
+			String anno=dataNascita.substring(2, 4);
 			return anno;
 		}
 			
-		// Questo metodo ritorna la lettera corrispondente al mese di nascita 
+		// metodo che ritorna il mese di nascita 
 		public String meseNascita(String dataNascita) {
-			String mese=dataNascita.substring(5, 7);	//dalla stringa della data prendo solo il mese e associo al numero del mese la lettera corrispondente
+			String mese=dataNascita.substring(5, 7);
 			String lettera= "";
-									
+			
 			switch(mese) {
 			
 				case "01":	
@@ -146,26 +140,25 @@ public class CodiceFiscale {
 			return lettera; 
 			}
 		
-		// Questo metodo ritorna le due cifre del giorno di nascita 
+		// metodo che ritorna il giorno di nascita 
 		public String giornoNascita(String dataNascita,String sex) {
 	
 		String giorno=dataNascita.substring(8, 10);
-		int giornoNum = Integer.parseInt(giorno);  // converto la String del giorno in numero per poter sommare in caso il sesso sia f
+		int giornoNum = Integer.parseInt(giorno);
 		
 		if(sex.equalsIgnoreCase("F")){
 			giornoNum=giornoNum+40;
 									  }
-		String def=String.valueOf(giornoNum);  //riconverto in formato String
+		String def=String.valueOf(giornoNum);
 			if(giornoNum<10)
 			{
-				return "0" + def;   
+				return "0" + def;
 			}
 		
 		return def;
 															}
-		
-		//Questo metodo calcola il valore che verrÃ  associato alla lettera finale di controllo del codice fiscale
- 		public int valoreCodiceControllo (String s) 
+	
+ 		public int valoreCodiceControllo (String s) //Con questo metodo calcolo il valore che verrà associato alla lettera finale di controllo del codice fiscale
 	{
 		int valore = 0;
 		
@@ -180,18 +173,17 @@ public class CodiceFiscale {
 		return valore;
 	}
 		
- 		//Questo metodo calcola il valore di ogni cifra in posizione dispari del codice fiscale, secondo una tabella predefinita
-		public int valoreCifreDispari (char carattereTest) 
+		public int valoreCifreDispari (char carattereTest) //Questo metodo serve per calcolare il valore di ogni cifra in posizione dispari del codice fiscale, secondo una tabella predefinita
 	{
 		
-		String str1 = "BAKPLCQDREVOSFTGUHMINJWZYX"; 		//Faccio in modo che il valore che assume un determinato carattere, sia corrispondente alla sua posizione all'interno di questa stringa
+		String str1 = "BAKPLCQDREVOSFTGUHMINJWZYX"; 		//  Faccio in modo che il valore che assume un determinato carattere, sia corrispondente alla sua posizione all'interno di questa stringa
 		String str2 = "10   2 3 4   5 6 7 8 9";
 		for(int i = 0; i<str1.length(); i++)
 		{
 			if(str1.charAt(i) == carattereTest)
 				return i;
 		}
-		for(int i = 0; i<str2.length(); i++)    			//Se entra in questo for vuol dire che il carattere non era una lettera ma una cifra
+		for(int i = 0; i<str2.length(); i++)    // Se entra in questo for vuol dire che il carattere non era una lettera ma una cifra
 		{
 			if(str2.charAt(i) == carattereTest)
 				return i;
@@ -199,9 +191,9 @@ public class CodiceFiscale {
 		
 		return 0;
 	}
-			
-		//Questo metodo calcola il valore di ogni cifra in posizione pari del codice fiscale, secondo una tabella predefinita
-		public int valoreCifrePari (char carattereTest) {
+				
+		public int valoreCifrePari (char carattereTest) // Stesso discorso per il metodo valoreCifreDispari().
+	{
 		
 		String str3 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		String str4 = "0123456789";
@@ -218,9 +210,8 @@ public class CodiceFiscale {
 		
 		return 0;
 	}
-		
-		//Questo metodo restituisce il carattere che si riferisce al valore in input
-		public char codiceControllo (int valore)  
+	
+		public char codiceControllo (int valore)  // Questo metodo restituisce il carattere che si riferisce al valore in input
 		{
 			int resto = valore % 26;
 			String str5 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -231,58 +222,16 @@ public class CodiceFiscale {
 			}
 			return ' ';
 		}
-	
-		//Questo metodo restituisce il carattere alfanumerico corrispondente al comune di nascita
-		public String CodiceComune (String comune_nascita)
-		 {
-			 XMLInputFactory xmcomlif = null;
-			 	XMLStreamReader comuni = null;
-			{
-			 
-			    try {
-			        xmcomlif = XMLInputFactory.newInstance();
-			        comuni = xmcomlif.createXMLStreamReader(new FileInputStream("comuni.xml"));
-			        }
-			    catch (Exception e) {
-			        System.out.println("Errore nell'inizializzazione del reader:");
-			    	}
-			}
-			 
-				try{
-		            while(comuni.hasNext()){
-		            	switch (comuni.getEventType()) 
-		            	{
-		            	case XMLStreamConstants.CHARACTERS: //Mi interessa quando nell'xml ï¿½ presente un "character"
-		            			if (comuni.getText().equals(comune_nascita))  //Verifico quando il testo corrisponde al comune di nascita che gli passo come input
-		            			{           				            			
-			            			for(int i = 0; i<4; i++) //faccio un ciclo  for per arrivare al prossimo "character" per prendere il codice corrispondente al comune di nascita trovato sopra
-			            			{							// ciclo 4 volte perchï¿½ ci sono 4 eventi tra il "character" del nome del comune e il suo relativo codice
-			            				comuni.next();			// devo tenere a mente che nell'xml c'ï¿½ il "character" che permette di andare a capo
-			            			}            		
-				            			if(comuni.getEventType() == XMLStreamConstants.CHARACTERS) //verifico che l'evento sia "character"
-				            			{
-				            				return  comuni.getText();   // Ritorna il codice
-				            			}        			
-		            			}                     		
-		            	break;                      	            	
-		            	}
-		            	comuni.next();            	            	
-		            } 		
-		           }catch (Exception e){
-		                    System.out.println("Errore nella lettura:");                  
-		           }return "NOT_FOUND";
-				  
-				}
 		
-		//Questo metodo riunisce tutti i metodi precedenti per calcolare il codice fiscale completo
 		public String creaCodiceFiscale (Persona ex)
 		{	
+			InputOutput lett = new InputOutput();
 			String cognome = surname(ex.getCognome());
 			String nome = name(ex.getNome());
 			String anno = annoNascita(ex.getDataNascita());
 			String mese = meseNascita(ex.getDataNascita());
 			String giorno = giornoNascita(ex.getDataNascita(), ex.getSesso());
-			String comune = CodiceComune(ex.getComuneNascita());
+			String comune = lett.CodiceComune(ex.getComuneNascita());
 			String totale = cognome + nome + anno + mese + giorno + comune;
 			int k = valoreCodiceControllo(totale);
 			char m = codiceControllo(k);
@@ -290,6 +239,68 @@ public class CodiceFiscale {
 			return codiceFiscale;
 		}
 
+		// Ritorna "assente" se non c'è l'accoppiamento (sexTogheter) altrimenti ritorna il codice stesso
+		public String sexTogheter(String utili, ArrayList<String> tot){        	
+			
+            for (int j = 0; j < tot.size(); j++) {
+
+                if(tot.get(j).equals(utili)) {
+                	tot.remove(tot.get(j));
+                    return utili;
+                }	                	
+                }	            
+return "ASSENTE";
+
+}
 		
+		// Controlla la validità dei codici all'interno del file "CodiciFiscali.xml"
+		public void controlValid(ArrayList<String> tot, ArrayList<String> inv){
+
+				for (int i = 0; i< tot.size(); i++) {
+				
+				CodiceFiscale controllo = new CodiceFiscale();
+				int valoreCode = controllo.valoreCodiceControllo(tot.get(i));
+				char control = controllo.codiceControllo(valoreCode);
+				String codeControl = "" + control;
+				
+				//controllo nome e cognome
+				if(tot.get(i).substring(0, 6).matches("[A-Z]{6}")== false){
+				 inv.add(tot.get(i));
+				 tot.remove(tot.get(i));}
+
+				// controllo anno
+				else   if(tot.get(i).substring(6,8).matches("[0-9]{2}")== false){
+				 inv.add(tot.get(i));
+				 tot.remove(tot.get(i));}
+				
+				//controllo mese
+				else  if(tot.get(i).substring(8,9).matches("[A-EHLMPRST]")== false){
+				 inv.add(tot.get(i));
+				 tot.remove(tot.get(i));}
+				
+				// controllo giorno + sesso
+				else  if(tot.get(i).substring(9,11).matches("(0[0-9]|[1-2][0-9]|3[01])|(4[1-9]|[56][0-9]|7[01])")== false){
+				 inv.add(tot.get(i));
+				 tot.remove(tot.get(i));}
+				
+				
+				//controllo luogo
+				else    if(tot.get(i).substring(11,15).matches("[A-MZ][1-9]\\d{2}|[A-M]0(?:[1-9]\\d|0[1-9])")== false){
+				 inv.add(tot.get(i));
+				 tot.remove(tot.get(i));}
+				
+				// controlli codice di controllo
+				else    if(tot.get(i).substring(15,16).matches("[A-Z]")== false){
+				 inv.add(tot.get(i));
+				 tot.remove(tot.get(i));}
+				      
+				else 	if(tot.get(i).substring(15,16) == codeControl)  //Utilizzo il metodo già creato in CodiceFiscale per verificare il controllo dell'ultimo carattere
+						{
+				 inv.add(tot.get(i));
+				 tot.remove(tot.get(i));}
+						}
+				
+				}
+
 		
 }

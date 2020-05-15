@@ -1,112 +1,38 @@
-import javax.xml.stream.XMLInputFactory;
- 
-import javax.xml.stream.XMLStreamConstants;
-import javax.xml.stream.XMLStreamReader;
-import java.io.FileInputStream;
+import java.util.ArrayList;
 
 public class Main {
 
     public static void main(String[] args) {
     	
-    	Lettore scanner = new Lettore();
-    	XMLInputFactory xmlif = scanner.getXmlif();
-        XMLStreamReader lettore= scanner.getXmlr();
-        Persona[] persone = new Persona [1000];
-
-        int i = -1;
-        scanner.initReader("inputPersone.xml");
-        
-        for (int m=0; m<persone.length; m++) {
-        	   persone[m] = new Persona();
-        	
+    	InputOutput scanner = new InputOutput();        
+    	Persona[] persone = new Persona [1000];
+    	CodiceFiscale code = new CodiceFiscale();
+    	ArrayList<String> totale = new ArrayList<>();  
+   	 	ArrayList<String> invalidi = new ArrayList<>();
+    	
+    	for (int m=0; m<persone.length; m++) { //Inizializzo l'array di persona
+		  	   persone[m] = new Persona();
+		  	}
+    	
+    	 scanner.initReader("inputPersone.xml"); //leggo e salvo i dati da file
+    	 scanner.leggiDati(persone);
+    	
+         for (int k=0; k<persone.length; k++ )               
+            persone[k].setCodiceFiscale(code.creaCodiceFiscale(persone[k])); //genero e salvo i codici fiscali
+                          
+        scanner.initReader("codiciFiscali.xml"); //leggo e controllo la validità dei codici all'interno del file "codiciFiscali.xml"
+        scanner.createTotal(totale);
+        code.controlValid(totale, invalidi);
+      
+        for (int k=0; k<persone.length; k++) // verifica l'accopiamento dei codici generati con il file "codiciFiscali.xml"
+         	{        	
+        	if(code.sexTogheter(persone[k].getCodiceFiscale(), totale).equals("ASSENTE")) 
+        		persone[k].setCodiceFiscale("ASSENTE");     
         	}
-
-        try{
-            while(lettore.hasNext()){
-
-                switch (lettore.getEventType()){
-
-                   
-                    case XMLStreamConstants.START_ELEMENT: // inizio di un elemento: stampa il nome del tag e i suoi attributi
-               
-                        if (lettore.getLocalName().equals("persona"))
-                    	{
-                    		i++;
-                    	}
-                        
-                        else if (lettore.getLocalName().equals("nome"))
-                        	{
-                        		lettore.next();
-                        		if(lettore.getEventType() == XMLStreamConstants.CHARACTERS) // Ho trovato che il valore della costante "CHARACTERS" ï¿½ 4: qui verifico che dopo il tag d'apertura nome, ci sia un carattere, e lo copio in un array di nomi.
-                        			persone[i].setNome(lettore.getText());
-                        	}
-                         else if (lettore.getLocalName().equals("cognome"))
-                    	{
-                    		lettore.next();
-                    		if(lettore.getEventType() == XMLStreamConstants.CHARACTERS) // Ho trovato che il valore della costante "CHARACTERS" ï¿½ 4: qui verifico che dopo il tag d'apertura nome, ci sia un carattere, e lo copio in un array di nomi.
-                    			persone[i].setCognome(lettore.getText());
-                    		}
-                        		
-                        else if (lettore.getLocalName().equals("sesso"))
-                    	{
-                    		lettore.next();
-                    		if(lettore.getEventType() == XMLStreamConstants.CHARACTERS) // Ho trovato che il valore della costante "CHARACTERS" ï¿½ 4: qui verifico che dopo il tag d'apertura nome, ci sia un carattere, e lo copio in un array di nomi.
-                    			persone[i].setSesso(lettore.getText());                 		
-                    	}
-                        		
-                        else if (lettore.getLocalName().equals("comune_nascita"))
-                    	{
-                    		lettore.next();
-                    		if(lettore.getEventType() == XMLStreamConstants.CHARACTERS) // Ho trovato che il valore della costante "CHARACTERS" ï¿½ 4: qui verifico che dopo il tag d'apertura nome, ci sia un carattere, e lo copio in un array di nomi.
-                    			persone[i].setComuneNascita(lettore.getText());
-                    		
-                    		
-                    	}
-                        else if (lettore.getLocalName().equals("data_nascita"))
-                    	{
-                    		lettore.next();
-                    		if(lettore.getEventType() == XMLStreamConstants.CHARACTERS) // Ho trovato che il valore della costante "CHARACTERS" ï¿½ 4: qui verifico che dopo il tag d'apertura nome, ci sia un carattere, e lo assegno alla persona[i].
-                    			persone[i].setDataNascita(lettore.getText());
-                    		
-                    	}
-                        break;
-                }
-                lettore.next();
-            }
-          CodiceFiscale prova1 = new CodiceFiscale();
-         // System.out.println(prova1.surname("MLT"));
-         for (int k=0; k<persone.length; k++ )
-           {
-            String code = prova1.creaCodiceFiscale(persone[k]);
-            persone[k].setCodiceFiscale(code);
-           }
-         
-        
-        }catch (Exception e){
-            System.out.println("Errore nella lettura:");
-        }
-     
-        ClasseAldue prova = new ClasseAldue();
-        prova.initReader("codiciFiscali.xml");
-        prova.createTotal();
-        prova.controlValid();
-        System.out.println(prova.getInvalidi());
-        System.out.println(prova.getSpaiati());
-        System.out.println(prova.getTotale());
-        System.out.println(prova.getInvalidi().size());
-        System.out.println(prova.getTotale().size());
-        
-        for (int k=0; k<persone.length; k++)
-        {
-        	
-        	if(prova.sexTogheter(persone[k].getCodiceFiscale()).equals("ASSENTE")) 
-        		persone[k].setCodiceFiscale("ASSENTE");
-     
-        	//System.out.println(persone[k].toString());
-        	}
-        System.out.println(prova.getSpaiati());
-        System.out.println(prova.getSpaiati().size());
-        System.out.println(prova.getTotale().size());
+    
+        scanner.initWriter("codiciPersone.xml");  //Crea output
+        scanner.createOutput(persone, invalidi, totale);
+       
 }
 }
 
