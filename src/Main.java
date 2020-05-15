@@ -7,12 +7,13 @@ import java.io.FileInputStream;
 public class Main {
 
     public static void main(String[] args) {
+    	
 
         XMLInputFactory xmlif = null;
         XMLStreamReader lettore = null;
       
         Persona[] persone = new Persona [1000]; 
-        Generatore codice = new Generatore();
+    
         int i = -1;
         try {
             xmlif = XMLInputFactory.newInstance();
@@ -80,13 +81,13 @@ public class Main {
                 }
                 lettore.next();
             }
-            CodiceFiscale prova = new CodiceFiscale();
-         for (int k=0; k<persone.length; k++ )
+          //  CodiceFiscale prova = new CodiceFiscale();
+         /*for (int k=0; k<persone.length; k++ )
            {
              
              System.out.println(prova.creaCodiceSenzaControllo(persone[k]));
             System.out.println(persone[k].toString());
-           }
+           }*/
          
         
         }catch (Exception e){
@@ -96,7 +97,15 @@ public class Main {
        /*
         int m = text.valoreCodiceControllo("MRNLRT97L14D940");
         System.out.println(text.codiceControllo(m));*/
-        
+        ClasseAldue prova = new ClasseAldue();
+        prova.initReader("codiciFiscali.xml");
+        prova.createTotal();
+        prova.controlValid();
+        System.out.println(prova.getInvalidi());
+        System.out.println(prova.getSpaiati());
+        System.out.println(prova.getTotale());
+        System.out.println(prova.getInvalidi().size());
+        System.out.println(prova.getTotale().size());
       
 }
 }

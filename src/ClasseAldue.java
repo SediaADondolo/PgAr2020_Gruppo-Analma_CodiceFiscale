@@ -1,7 +1,7 @@
 import javax.xml.stream.*;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.util.ArrayList;
+import java.util.*;
 
 
     public class ClasseAldue{
@@ -23,11 +23,35 @@ import java.util.ArrayList;
         XMLOutputFactory xmlof;
         XMLStreamWriter xmlw = null;
 
-        ArrayList<String> totale = new ArrayList<>();
-        ArrayList<String> invalidi = new ArrayList<>();
-        ArrayList<String> spaiati = new ArrayList<>();
+        private ArrayList<String> totale = new ArrayList<>();
+        private      	ArrayList<String> invalidi = new ArrayList<>();
+        private   		ArrayList<String> spaiati = new ArrayList<>();
+        
+        public ArrayList<String> getTotale() {
+			return totale;
+		}
 
-        public Utility() {
+		public void setTotale(ArrayList<String> totale) {
+			this.totale = totale;
+		}
+
+        public ArrayList<String> getInvalidi() {
+			return invalidi;
+		}
+
+		public void setInvalidi(ArrayList<String> invalidi) {
+			this.invalidi = invalidi;
+		}
+
+		public ArrayList<String> getSpaiati() {
+			return spaiati;
+		}
+
+		public void setSpaiati(ArrayList<String> spaiati) {
+			this.spaiati = spaiati;
+		}
+
+		public ClasseAldue() {
         }
 
         //Inizializza Lettore
@@ -57,7 +81,7 @@ import java.util.ArrayList;
 
         //Crea Arraylist con tutti i codici fiscali del file codiciFiscali.xml
         public void createTotal(){
-
+        	
             try{
                 while(xmlr.hasNext()){
 
@@ -88,30 +112,35 @@ import java.util.ArrayList;
         //Controlla se i codici in codiciFiscali.xml sono validi
         public void controlValid(){
 
-            for (String c: totale) {
+            for (int i = 0; i< totale.size(); i++) {
 
-                if(!c.substring(0, 6).matches("[A-Z]{6}")){
-                    invalidi.add(c);
-                    totale.remove(c);}
+                if(!totale.get(i).substring(0, 6).matches("[A-Z]{6}")){
+                    invalidi.add(totale.get(i));
+                    totale.remove(totale.get(i));}
 
-                if(!c.substring(6,8).matches("[0-9]{2}")){
-                    invalidi.add(c);
-                    totale.remove(c);}
+                if(!totale.get(i).substring(6,8).matches("[0-9]{2}")){
+                    invalidi.add(totale.get(i));
+                    totale.remove(totale.get(i));}
 
-                if(!c.substring(8).matches("[A-EHLMPRST]")){
-                    invalidi.add(c);
-                    totale.remove(c);}
+                if(!totale.get(i).substring(8).matches("[A-EHLMPRST]")){
+                    invalidi.add(totale.get(i));
+                    totale.remove(totale.get(i));}
 
                 //giorno
-
+                if(!totale.get(i).substring(9,11).matches("^([0-9]|[1-2][0-9]|3[01])$|^(4[1-9]|[56][0-9]|7[01])$")){
+                    invalidi.add(totale.get(i));
+                    totale.remove(totale.get(i));}
+                
+                
                 //luogo
+                if(!totale.get(i).substring(11,15).matches("[A-MZ][1-9]\\d{2}|[A-M]0(?:[1-9]\\d|0[1-9])")){
+                    invalidi.add(totale.get(i));
+                    totale.remove(totale.get(i));}
 
-                if(c.substring(11,15).matches("[A-Z][0-9]{3}"))
-                    //CONTROLLO
 
-                    if(c.substring(16).matches("[A-Z]")){
-                        invalidi.add(c);
-                        totale.remove(c);}
+                    if(totale.get(i).substring(16).matches("[A-Z]")){
+                        invalidi.add(totale.get(i));
+                        totale.remove(totale.get(i));}
             }
 
 
@@ -212,4 +241,4 @@ import java.util.ArrayList;
 
     }
 
-}
+
